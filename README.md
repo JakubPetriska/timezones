@@ -1,6 +1,6 @@
 # Timezones
 
-> A Vue.js project
+> Test web app showing current times in different time zones.
 
 ## Build Setup
 
