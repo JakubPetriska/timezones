@@ -1,6 +1,6 @@
 # Timezones
 
-> Test web app showing current times in different time zones.
+> Simple web application showing current times in different time zones.
 
 ## Build Setup
 
