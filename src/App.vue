@@ -1,7 +1,12 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
+    <md-toolbar>
+      <h1 class="md-title">Timezones</h1>
+    </md-toolbar>
+    
+    <div class="main-content">
+      <hello></hello>
+    </div>
   </div>
 </template>
 
@@ -17,12 +22,7 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.main-content {
+  padding: 16px;
 }
 </style>
