@@ -80,8 +80,22 @@ export default {
       }
     }
 
-    // TODO Restore shown timezones from local storage
-    // TODO check that all timezones restored from local storage are available
+    console.log('hey')
+    if (typeof (Storage) !== 'undefined' && localStorage.shownTimezones) {
+      console.log('there')
+      // Browser supports localStorage and shownTimezones are stored
+      // Make sure all stored timezones are contained in available timezones, otherwise drop them
+      console.log(localStorage.shownTimezones)
+      let storedTimezonesCount = localStorage.shownTimezones.length
+      for (let i = 0; i < storedTimezonesCount; ++i) {
+        let storedTimezoneValue = localStorage.shownTimezones[i]
+        console.log(storedTimezoneValue)
+        if (this.availableTimezones.has(storedTimezoneValue)) {
+          console.log('boi')
+          this.shownTimezones.push(storedTimezoneValue)
+        }
+      }
+    }
   },
   computed: {
     timezonesToAdd() {
@@ -95,11 +109,18 @@ export default {
     closeDialog(ref) {
       this.$refs[ref].close()
     },
+    updateStoredShownTimezones() {
+      console.log(this.shownTimezones)
+      localStorage.shownTimezones = this.shownTimezones
+      console.log(localStorage.shownTimezones)
+    },
     addTimezone(timezone) {
       this.shownTimezones.push(timezone.value)
+      this.updateStoredShownTimezones()
     },
     removeTimezone(timezoneValue) {
       this.shownTimezones.splice(this.shownTimezones.indexOf(timezoneValue), 1)
+      this.updateStoredShownTimezones()
     }
   }
 }
