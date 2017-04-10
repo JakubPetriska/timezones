@@ -10,7 +10,9 @@
                    :key="timezoneValue"
                    class="timezone-card-wrapper">
           <timezone-card :timezone-name="availableTimezones.get(timezoneValue).text"
-                         :timezone-key="availableTimezones.get(timezoneValue).utc[0]"></timezone-card>
+                         :timezone-key="availableTimezones.get(timezoneValue).utc[0]"
+                         v-on:remove="removeTimezone(timezoneValue)">
+          </timezone-card>
         </md-layout>
       </md-layout>
     </div>
@@ -91,6 +93,9 @@ export default {
     },
     addTimezone(timezone) {
       this.shownTimezones.push(timezone.value)
+    },
+    removeTimezone(timezoneValue) {
+      this.shownTimezones.splice(this.shownTimezones.indexOf(timezoneValue), 1)
     }
   }
 }

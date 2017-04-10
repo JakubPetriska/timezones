@@ -6,7 +6,7 @@
   
     <md-card-content>{{ timezoneName }}</md-card-content>
   
-    <md-button>Remove</md-button>
+    <md-button @click.native="remove()">Remove</md-button>
   </md-card>
 </template>
 
@@ -27,6 +27,11 @@ export default {
   computed: {
     formattedTime() {
       return this.time.tz(this.timezoneKey).format('h:mm:ss a')
+    }
+  },
+  methods: {
+    remove() {
+      this.$emit('remove')
     }
   }
 }
