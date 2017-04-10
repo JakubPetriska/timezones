@@ -1,14 +1,33 @@
 <template>
   <md-card>
     <md-card-header>
-      <div class="md-title">3:35 AM</div>
+      <div class="md-title">{{ formattedTime }}</div>
     </md-card-header>
   
-    <md-card-content>
-      (UTC-08:00) Pacific Time (US & Canada)
-      <br /> America/Los_Angeles
-    </md-card-content>
+    <md-card-content>{{ timezoneName }}</md-card-content>
   
     <md-button>Remove</md-button>
   </md-card>
 </template>
+
+<script>
+import momenttz from 'moment-timezone'
+
+export default {
+  name: 'timezone-card',
+  props: ['timezoneName', 'timezoneKey'],
+  data: function () {
+    return {
+      time: momenttz()
+    }
+  },
+  created: function () {
+    setInterval(() => { this.time = momenttz() }, 1000)
+  },
+  computed: {
+    formattedTime() {
+      return this.time.tz(this.timezoneKey).format('h:mm:ss a')
+    }
+  }
+}
+</script>
