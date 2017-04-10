@@ -72,9 +72,13 @@ export default {
     let timezonesCount = timezonesjson.length
     for (let i = 0; i < timezonesCount; ++i) {
       let timezone = timezonesjson[i]
-      this.availableTimezones.set(timezone.value, timezone)
+      if (timezone.utc && timezone.utc.length > 0) {
+        // Omit timezones withou utc field, the utc field is used to identify the timezone
+        // Timezones withou utc field are old and unused (nothing returned by googling of such timezones)
+        // At the time of writing (10.4.2017) there were 2 such timezones
+        this.availableTimezones.set(timezone.value, timezone)
+      }
     }
-    // TODO make sure all timezones have utc array
 
     // TODO Restore shown timezones from local storage
     // TODO check that all timezones restored from local storage are available
