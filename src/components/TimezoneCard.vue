@@ -1,10 +1,10 @@
 <template>
   <md-card>
     <md-card-header>
-      <div class="md-title">{{ formattedTime }}</div>
+      <div id="timezone-time" class="md-title">{{ formattedTime }}</div>
     </md-card-header>
   
-    <md-card-content>{{ timezoneName }}</md-card-content>
+    <md-card-content id="timezone-name">{{ timezoneName }}</md-card-content>
   
     <md-button class="md-icon-button"
                @click.native="remove()"
