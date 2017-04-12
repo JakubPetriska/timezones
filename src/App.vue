@@ -5,7 +5,8 @@
           style="flex: 1">Timezones</h1>
   
       <md-button class="md-icon-button"
-                 @click.native="openDialog('clear-all-confirmation-dialog')">
+                 @click.native="openDialog('clear-all-confirmation-dialog')"
+                 :disabled="shownTimezones.length == 0">
         <md-icon>clear_all</md-icon>
       </md-button>
   
