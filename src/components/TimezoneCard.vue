@@ -6,7 +6,11 @@
   
     <md-card-content>{{ timezoneName }}</md-card-content>
   
-    <md-button @click.native="remove()">Remove</md-button>
+    <md-button class="md-icon-button"
+               @click.native="remove()"
+               style="position: absolute; right: 0;">
+      <md-icon>close</md-icon>
+    </md-button>
   </md-card>
 </template>
 
