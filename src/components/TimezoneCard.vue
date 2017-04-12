@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     formattedTime() {
-      return this.time.tz(this.timezoneKey).format('h:mm:ss a')
+      return this.time.tz(this.timezoneKey).format('h:mm:ss A')
     }
   },
   methods: {
