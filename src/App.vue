@@ -24,7 +24,8 @@
                    class="timezone-card-wrapper">
           <timezone-card :timezone-name="availableTimezones.get(timezoneValue).text"
                          :timezone-key="availableTimezones.get(timezoneValue).utc[0]"
-                         v-on:remove="removeTimezone(timezoneValue)">
+                         v-on:remove="removeTimezone(timezoneValue)"
+                         class="md-flex">
           </timezone-card>
         </md-layout>
       </md-layout>
@@ -149,10 +150,11 @@ export default {
 
 <style>
 .main-content {
-  padding: 8px;
+  padding: 16px;
 }
 
 .timezone-card-wrapper {
-  margin: 8px;
+  margin: 16px;
+  min-width: 280px;
 }
 </style>
