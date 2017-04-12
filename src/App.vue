@@ -4,6 +4,12 @@
       <h1 class="md-title"
           style="flex: 1">Timezones</h1>
   
+      <md-button id="clear"
+                 class="md-icon-button"
+                 @click.native="openDialog('clear-confirmation-dialog')">
+        <md-icon>clear_all</md-icon>
+      </md-button>
+  
       <md-button id="add-timezone"
                  class="md-icon-button"
                  @click.native="openDialog('add-dialog')">
@@ -23,6 +29,24 @@
         </md-layout>
       </md-layout>
     </div>
+  
+    <!-- Dialog that confirms clearing of all timezones -->
+    <md-dialog md-open-from="#clear"
+               md-close-to="#clear"
+               ref="clear-confirmation-dialog">
+      <md-dialog-title>Clear</md-dialog-title>
+  
+      <md-dialog-content>
+        Do you really want to clear all shown timezones?
+      </md-dialog-content>
+  
+      <md-dialog-actions>
+        <md-button class="md-primary"
+                   @click.native="closeDialog('clear-confirmation-dialog')">Cancel</md-button>
+        <md-button class="md-primary"
+                   @click.native="clearAll(); closeDialog('clear-confirmation-dialog')">Confirm</md-button>
+      </md-dialog-actions>
+    </md-dialog>
   
     <!-- Dialog that adds new timezone -->
     <md-dialog md-open-from="#add-timezone"
@@ -113,6 +137,10 @@ export default {
     },
     removeTimezone(timezoneValue) {
       this.shownTimezones.splice(this.shownTimezones.indexOf(timezoneValue), 1)
+      this.updateStoredShownTimezones()
+    },
+    clearAll() {
+      this.shownTimezones = []
       this.updateStoredShownTimezones()
     }
   }
