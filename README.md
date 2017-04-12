@@ -1,6 +1,8 @@
 # Timezones
 
-> Simple web application showing current times in different time zones.
+Example web application showing current times in different time zones.
+
+Built using Vue.js.
 
 ## Build Setup
 
