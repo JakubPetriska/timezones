@@ -55,11 +55,11 @@
                ref="add-dialog">
       <md-dialog-title>Add timezone</md-dialog-title>
   
-      <md-dialog-content>
+      <md-dialog-content class="timezones-list">
         <md-list>
           <md-list-item v-for="timezone in timezonesToAdd"
                         :key="timezone.value"
-                        class="md-button"
+                        class="timezones-list-item"
                         @click.native="addTimezone(timezone); closeDialog('add-dialog')">
             <div class="md-list-text-container">
               <span>{{timezone.value}}</span>
@@ -156,5 +156,15 @@ export default {
 .timezone-card-wrapper {
   margin: 16px;
   min-width: 280px;
+}
+
+.timezones-list {
+  margin-right: 12px;
+  margin-left: 12px;
+}
+
+.timezones-list-item {
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 </style>
