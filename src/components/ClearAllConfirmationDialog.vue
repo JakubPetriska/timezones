@@ -18,7 +18,7 @@ export default {
   name: 'clear-all-confirmation-dialog',
   methods: {
     close() {
-      // First and only child is the dialog element
+      // First and only child of this component is the dialog element
       this.$children[0].close()
     },
     confirm() {

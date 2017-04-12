@@ -59,6 +59,7 @@ export default {
     }
   },
   created: function () {
+    // Add timezones from timezones.json into our available timezones Map
     for (let i = 0; i < timezonesjson.length; ++i) {
       let timezone = timezonesjson[i]
       if (timezone.utc && timezone.utc.length > 0) {
@@ -69,6 +70,7 @@ export default {
       }
     }
 
+    // Try to load previously shown timezones from localStorage
     if (typeof (Storage) !== 'undefined' && localStorage.shownTimezones) {
       // Browser supports localStorage and shownTimezones are stored
       // Make sure all stored timezones are contained in available timezones, otherwise drop them
