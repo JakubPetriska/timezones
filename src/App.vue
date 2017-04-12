@@ -101,8 +101,7 @@ export default {
     }
   },
   created: function () {
-    let timezonesCount = timezonesjson.length
-    for (let i = 0; i < timezonesCount; ++i) {
+    for (let i = 0; i < timezonesjson.length; ++i) {
       let timezone = timezonesjson[i]
       if (timezone.utc && timezone.utc.length > 0) {
         // Omit timezones withou utc field, the utc field is used to identify the timezone
@@ -116,8 +115,7 @@ export default {
       // Browser supports localStorage and shownTimezones are stored
       // Make sure all stored timezones are contained in available timezones, otherwise drop them
       let storedTimezones = JSON.parse(localStorage.shownTimezones)
-      let storedTimezonesCount = storedTimezones.length
-      for (let i = 0; i < storedTimezonesCount; ++i) {
+      for (let i = 0; i < storedTimezones.length; ++i) {
         let storedTimezoneValue = storedTimezones[i]
         if (this.availableTimezones.has(storedTimezoneValue)) {
           this.shownTimezones.push(storedTimezoneValue)
