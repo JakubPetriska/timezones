@@ -45,7 +45,7 @@
         <md-button class="md-primary"
                    @click.native="closeDialog('clear-confirmation-dialog')">Cancel</md-button>
         <md-button class="md-primary"
-                   @click.native="clearAll(); closeDialog('clear-confirmation-dialog')">Confirm</md-button>
+                   @click.native="clearAll(); closeDialog('clear-confirmation-dialog')">Clear all</md-button>
       </md-dialog-actions>
     </md-dialog>
   
