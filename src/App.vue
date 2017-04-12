@@ -52,12 +52,19 @@
     <!-- Dialog that adds new timezone -->
     <md-dialog md-open-from="#add-timezone"
                md-close-to="#add-timezone"
-               ref="add-dialog">
-      <md-dialog-title>Add timezone</md-dialog-title>
+               ref="add-dialog"
+               v-on:close="clearSearchQuery()">
+      <md-dialog-title>
+        <span>Add timezone</span>
+        <md-input-container style="padding-bottom:0">
+          <md-input v-model="addTimezoneSearchQuery"
+                    placeholder="Search for timezone name, city, state or offset"></md-input>
+        </md-input-container>
+      </md-dialog-title>
   
-      <md-dialog-content class="timezones-list">
+      <md-dialog-content class="add-timezone-dialog-content">
         <md-list>
-          <md-list-item v-for="timezone in timezonesToAdd"
+          <md-list-item v-for="timezone in searchedTimezones"
                         :key="timezone.value"
                         class="timezones-list-item"
                         @click.native="addTimezone(timezone); closeDialog('add-dialog')">
@@ -89,7 +96,8 @@ export default {
   data: function () {
     return {
       availableTimezones: new Map(),
-      shownTimezones: []
+      shownTimezones: [],
+      addTimezoneSearchQuery: ''
     }
   },
   created: function () {
@@ -118,8 +126,24 @@ export default {
     }
   },
   computed: {
-    timezonesToAdd() {
+    notAddedTimezones() {
       return timezonesjson.filter(e => this.shownTimezones.indexOf(e.value) === -1)
+    },
+    searchedTimezones() {
+      if (!this.addTimezoneSearchQuery) {
+        return this.notAddedTimezones
+      } else {
+        return this.notAddedTimezones
+          .map(timezone => {
+            return {
+              score: this.scoreTimezone(timezone, this.addTimezoneSearchQuery),
+              timezoneObject: timezone
+            }
+          })
+          .filter(timezoneWrapper => timezoneWrapper.score > 0)
+          .sort((left, right) => left.score - right.score)
+          .map(timezoneWrapper => timezoneWrapper.timezoneObject)
+      }
     }
   },
   methods: {
@@ -143,6 +167,22 @@ export default {
     clearAll() {
       this.shownTimezones = []
       this.updateStoredShownTimezones()
+    },
+    scoreTimezone(timezone, query) {
+      let score = 0
+      let searchStrings = [timezone.text, timezone.value]
+      if (timezone.utc) {
+        searchStrings.push(...timezone.utc)
+      }
+      for (let i = 0; i < searchStrings.length; ++i) {
+        if (searchStrings[i].toLowerCase().search(query.toLowerCase()) !== -1) {
+          ++score
+        }
+      }
+      return score
+    },
+    clearSearchQuery() {
+      this.addTimezoneSearchQuery = ''
     }
   }
 }
@@ -158,7 +198,7 @@ export default {
   min-width: 280px;
 }
 
-.timezones-list {
+.add-timezone-dialog-content {
   margin-right: 12px;
   margin-left: 12px;
 }
