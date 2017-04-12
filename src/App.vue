@@ -4,15 +4,13 @@
       <h1 class="md-title"
           style="flex: 1">Timezones</h1>
   
-      <md-button id="clear"
-                 class="md-icon-button"
-                 @click.native="openDialog('clear-confirmation-dialog')">
+      <md-button class="md-icon-button"
+                 @click.native="openDialog('clear-all-confirmation-dialog')">
         <md-icon>clear_all</md-icon>
       </md-button>
   
-      <md-button id="add-timezone"
-                 class="md-icon-button"
-                 @click.native="openDialog('add-dialog')">
+      <md-button class="md-icon-button"
+                 @click.native="openDialog('add-timezone-dialog')">
         <md-icon>add</md-icon>
       </md-button>
     </md-toolbar>
@@ -31,73 +29,32 @@
       </md-layout>
     </div>
   
-    <!-- Dialog that confirms clearing of all timezones -->
-    <md-dialog md-open-from="#clear"
-               md-close-to="#clear"
-               ref="clear-confirmation-dialog">
-      <md-dialog-title>Clear</md-dialog-title>
+    <clear-all-confirmation-dialog ref="clear-all-confirmation-dialog"
+                                   v-on:confirm="clearAll();">
+    </clear-all-confirmation-dialog>
   
-      <md-dialog-content>
-        Do you really want to clear all shown timezones?
-      </md-dialog-content>
-  
-      <md-dialog-actions>
-        <md-button class="md-primary"
-                   @click.native="closeDialog('clear-confirmation-dialog')">Cancel</md-button>
-        <md-button class="md-primary"
-                   @click.native="clearAll(); closeDialog('clear-confirmation-dialog')">Clear all</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-  
-    <!-- Dialog that adds new timezone -->
-    <md-dialog md-open-from="#add-timezone"
-               md-close-to="#add-timezone"
-               ref="add-dialog"
-               v-on:close="clearSearchQuery()">
-      <md-dialog-title>
-        <span>Add timezone</span>
-        <md-input-container style="padding-bottom:0">
-          <md-input v-model="addTimezoneSearchQuery"
-                    placeholder="Search for timezone name, city, state or offset"></md-input>
-        </md-input-container>
-      </md-dialog-title>
-  
-      <md-dialog-content class="add-timezone-dialog-content">
-        <md-list>
-          <md-list-item v-for="timezone in searchedTimezones"
-                        :key="timezone.value"
-                        class="timezones-list-item"
-                        @click.native="addTimezone(timezone); closeDialog('add-dialog')">
-            <div class="md-list-text-container">
-              <span>{{timezone.value}}</span>
-              <span>{{timezone.text}}</span>
-            </div>
-          </md-list-item>
-        </md-list>
-      </md-dialog-content>
-  
-      <md-dialog-actions>
-        <md-button class="md-primary"
-                   @click.native="closeDialog('add-dialog')">Cancel</md-button>
-      </md-dialog-actions>
-    </md-dialog>
+    <add-timezone-dialog ref="add-timezone-dialog"
+                         :timezones="notAddedTimezones"
+                         v-on:add-timezone="addTimezone">
+    </add-timezone-dialog>
   </div>
 </template>
 
 <script>
 import TimezoneCard from './components/TimezoneCard'
+import ClearAllConfirmationDialog from './components/ClearAllConfirmationDialog'
+import AddTimezoneDialog from './components/AddTimezoneDialog'
 import timezonesjson from 'timezones.json'
 
 export default {
   name: 'app',
   components: {
-    TimezoneCard
+    TimezoneCard, ClearAllConfirmationDialog, AddTimezoneDialog
   },
   data: function () {
     return {
       availableTimezones: new Map(),
-      shownTimezones: [],
-      addTimezoneSearchQuery: ''
+      shownTimezones: []
     }
   },
   created: function () {
@@ -126,30 +83,14 @@ export default {
   computed: {
     notAddedTimezones() {
       return timezonesjson.filter(e => this.shownTimezones.indexOf(e.value) === -1)
-    },
-    searchedTimezones() {
-      if (!this.addTimezoneSearchQuery) {
-        return this.notAddedTimezones
-      } else {
-        return this.notAddedTimezones
-          .map(timezone => {
-            return {
-              score: this.scoreTimezone(timezone, this.addTimezoneSearchQuery),
-              timezoneObject: timezone
-            }
-          })
-          .filter(timezoneWrapper => timezoneWrapper.score > 0)
-          .sort((left, right) => left.score - right.score)
-          .map(timezoneWrapper => timezoneWrapper.timezoneObject)
-      }
     }
   },
   methods: {
     openDialog(ref) {
-      this.$refs[ref].open()
-    },
-    closeDialog(ref) {
-      this.$refs[ref].close()
+      // Since dialogs are contained in their custom components the ref
+      // contains wrapper Vue instance which contains the dialog as it's
+      // first child.
+      this.$refs[ref].$children[0].open()
     },
     updateStoredShownTimezones() {
       localStorage.shownTimezones = JSON.stringify(this.shownTimezones)
@@ -165,22 +106,6 @@ export default {
     clearAll() {
       this.shownTimezones = []
       this.updateStoredShownTimezones()
-    },
-    scoreTimezone(timezone, query) {
-      let score = 0
-      let searchStrings = [timezone.text, timezone.value]
-      if (timezone.utc) {
-        searchStrings.push(...timezone.utc)
-      }
-      for (let i = 0; i < searchStrings.length; ++i) {
-        if (searchStrings[i].toLowerCase().search(query.toLowerCase()) !== -1) {
-          ++score
-        }
-      }
-      return score
-    },
-    clearSearchQuery() {
-      this.addTimezoneSearchQuery = ''
     }
   }
 }
@@ -194,15 +119,5 @@ export default {
 .timezone-card-wrapper {
   margin: 16px;
   min-width: 280px;
-}
-
-.add-timezone-dialog-content {
-  margin-right: 12px;
-  margin-left: 12px;
-}
-
-.timezones-list-item {
-  padding-top: 2px;
-  padding-bottom: 2px;
 }
 </style>
