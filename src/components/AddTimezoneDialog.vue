@@ -75,7 +75,7 @@ export default {
     },
     scoreTimezone(timezone, query) {
       let score = 0
-      let searchStrings = [timezone.text, timezone.value]
+      const searchStrings = [timezone.text, timezone.value]
       if (timezone.utc) {
         searchStrings.push(...timezone.utc)
       }

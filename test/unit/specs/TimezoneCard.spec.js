@@ -6,7 +6,7 @@ import momenttz from 'moment-timezone'
 describe('TimezoneCard.vue', () => {
   it('renders correct timezone name', () => {
     ['Time', 'Zone', 'test'].forEach(text => {
-      let vm = TestUtils.getMountedComponent(TimezoneCard, {
+      const vm = TestUtils.getMountedComponent(TimezoneCard, {
         timezoneName: text,
         timezoneKey: 'Etc/GMT+11'
       })
@@ -19,22 +19,22 @@ describe('TimezoneCard.vue', () => {
 // Test that TimezoneCard uses proper time for display (properly offset by it's timezone)
 describe('TimezoneCard.vue', () => {
   it('uses correct timezone', () => {
-    let londonTimezoneCard = TestUtils.getMountedComponent(TimezoneCard, {
+    const londonTimezoneCard = TestUtils.getMountedComponent(TimezoneCard, {
       timezoneName: 'London time',
       timezoneKey: 'Europe/London'
     })
-    let pragueTimezoneCard = TestUtils.getMountedComponent(TimezoneCard, {
+    const pragueTimezoneCard = TestUtils.getMountedComponent(TimezoneCard, {
       timezoneName: 'Prague time',
       timezoneKey: 'Europe/Prague'
     })
 
-    let currentTimeForLondon = momenttz()
-    let currentTimeForPrague = currentTimeForLondon.clone()
+    const currentTimeForLondon = momenttz()
+    const currentTimeForPrague = currentTimeForLondon.clone()
 
-    let londonTime = londonTimezoneCard.adjustTimezone(currentTimeForLondon)
-    let pragueTime = pragueTimezoneCard.adjustTimezone(currentTimeForPrague)
+    const londonTime = londonTimezoneCard.adjustTimezone(currentTimeForLondon)
+    const pragueTime = pragueTimezoneCard.adjustTimezone(currentTimeForPrague)
 
-    let testTimeFormat = 'YYYY-MM-DD HH:mm'
+    const testTimeFormat = 'YYYY-MM-DD HH:mm'
     expect(londonTime.format(testTimeFormat))
       .to.equal(pragueTime.subtract(1, 'h').format(testTimeFormat))
   })

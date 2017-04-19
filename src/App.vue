@@ -61,7 +61,7 @@ export default {
   created: function () {
     // Add timezones from timezones.json into our available timezones Map
     for (let i = 0; i < timezonesjson.length; ++i) {
-      let timezone = timezonesjson[i]
+      const timezone = timezonesjson[i]
       if (timezone.utc && timezone.utc.length > 0) {
         // Omit timezones withou utc field, the utc field is used to identify the timezone
         // Timezones withou utc field are old and unused (nothing returned by googling of such timezones)
@@ -74,9 +74,9 @@ export default {
     if (typeof (Storage) !== 'undefined' && localStorage.shownTimezones) {
       // Browser supports localStorage and shownTimezones are stored
       // Make sure all stored timezones are contained in available timezones, otherwise drop them
-      let storedTimezones = JSON.parse(localStorage.shownTimezones)
+      const storedTimezones = JSON.parse(localStorage.shownTimezones)
       for (let i = 0; i < storedTimezones.length; ++i) {
-        let storedTimezoneValue = storedTimezones[i]
+        const storedTimezoneValue = storedTimezones[i]
         if (this.availableTimezones.has(storedTimezoneValue)) {
           this.shownTimezones.push(storedTimezoneValue)
         }
