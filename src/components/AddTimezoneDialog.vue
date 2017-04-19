@@ -4,6 +4,8 @@
       <span>Add timezone</span>
       <md-input-container style="padding-bottom:0">
         <md-input v-model="searchQuery"
+                  autofocus
+                  @keyup.native.enter="selectFirst() && close()"
                   placeholder="Search for timezone name, city, state or offset"></md-input>
       </md-input-container>
     </md-dialog-title>
@@ -37,6 +39,13 @@ export default {
     return {
       searchQuery: ''
     }
+  },
+  created: function () {
+    window.addEventListener('keyup', (e) => {
+      if (e.code === 'Escape') {
+        this.close()
+      }
+    })
   },
   computed: {
     searchedTimezones() {
@@ -80,6 +89,15 @@ export default {
     clearSearchQueryDelayed() {
       // Clearing needs to be delayed, otherwise the dialog often resizes before closing
       setTimeout(() => { this.searchQuery = '' }, 100)
+    },
+    selectFirst() {
+      const timezones = this.searchedTimezones
+      if (timezones.length === 1) {
+        this.addTimezone(timezones[0])
+        return true
+      } else {
+        return false
+      }
     }
   }
 }
