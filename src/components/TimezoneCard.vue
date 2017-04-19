@@ -30,12 +30,15 @@ export default {
   },
   computed: {
     formattedTime() {
-      return this.time.tz(this.timezoneKey).format('h:mm:ss A')
+      return this.adjustTimezone(this.time).format('h:mm:ss A')
     }
   },
   methods: {
     remove() {
       this.$emit('remove')
+    },
+    adjustTimezone(time) {
+      return time.tz(this.timezoneKey)
     }
   }
 }
