@@ -2,6 +2,14 @@ import App from '@/App'
 import TestUtils from '../TestUtils.js'
 
 // TODO test adding of timezones (that it shows in shownTimezons)
+describe('App.vue', () => {
+  it('properly adds timezone', () => {
+    const vm = TestUtils.getMountedComponent(App)
+
+    expect(vm.shownTimezones.length).to.equal(0)
+  })
+})
+
 // TODO test removing of timzones
 // TODO test clearing of timezones
 
