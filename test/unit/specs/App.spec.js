@@ -18,6 +18,7 @@ describe('App.vue', () => {
     const vm = getApp()
     const timezoneToAddText = vm.notAddedTimezones[0].text
 
+    // TODO fix this test
     console.log(vm.shownTimezones.length)
     console.log(timezoneToAddText)
     console.log(vm.notAddedTimezones[0])
