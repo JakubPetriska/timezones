@@ -6,6 +6,7 @@ describe('App.vue', () => {
   it('properly adds timezone', () => {
     const vm = TestUtils.getMountedComponent(App)
 
+    // Component initially has 0 timezones
     expect(vm.shownTimezones.length).to.equal(0)
   })
 })
