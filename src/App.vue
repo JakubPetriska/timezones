@@ -84,8 +84,12 @@ export default {
     }
   },
   computed: {
+    availableTimezonesList() {
+      return Array.from(this.availableTimezones.values())
+        .sort((left, right) => left.offset - right.offset)
+    },
     notAddedTimezones() {
-      return timezonesjson.filter(e => this.shownTimezones.indexOf(e.value) === -1)
+      return this.availableTimezonesList.filter(e => this.shownTimezones.indexOf(e.value) === -1)
     }
   },
   methods: {
