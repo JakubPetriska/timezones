@@ -1,13 +1,36 @@
 import App from '@/App'
 import TestUtils from '../TestUtils.js'
 
-// TODO test adding of timezones (that it shows in shownTimezons)
-describe('App.vue', () => {
-  it('properly adds timezone', () => {
-    const vm = TestUtils.getMountedComponent(App)
+function getApp() {
+  return TestUtils.getMountedComponent(App)
+}
 
-    // Component initially has 0 timezones
-    expect(vm.shownTimezones.length).to.equal(0)
+describe('App.vue', () => {
+  it('initially has 0 shown timezones', () => {
+    expect(getApp().shownTimezones.length).to.equal(0)
+  })
+  it('properly adds timezone to shownTimezones', () => {
+    const vm = getApp()
+    vm.addTimezone(vm.notAddedTimezones[0])
+    expect(vm.shownTimezones.length).to.equal(1)
+  })
+  it('properly renders added timezone', () => {
+    const vm = getApp()
+    const timezoneToAddText = vm.notAddedTimezones[0].text
+
+    console.log(vm.shownTimezones.length)
+    console.log(timezoneToAddText)
+    console.log(vm.notAddedTimezones[0])
+
+    vm.addTimezone(vm.notAddedTimezones[0])
+    expect(vm.$el.querySelector('#timezone-name').textContent)
+        .to.equal(timezoneToAddText)
+  })
+  it('one less timezone is available after one is added', () => {
+    const vm = getApp()
+    const availableTimezoneCount = vm.notAddedTimezones.length
+    vm.addTimezone(vm.notAddedTimezones[0])
+    expect(vm.notAddedTimezones.length).to.equal(availableTimezoneCount - 1)
   })
 })
 
