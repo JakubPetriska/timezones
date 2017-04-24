@@ -8,7 +8,7 @@
   
     <md-button class="md-icon-button"
                @click.native="remove()"
-               style="position: absolute; right: 0;">
+               style="position: absolute; top: 0; right: 0;">
       <md-icon>close</md-icon>
     </md-button>
   </md-card>
