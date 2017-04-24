@@ -30,14 +30,14 @@ describe('AddTimezoneDialog.vue', () => {
     const vm = getAddTimezoneDialog({ timezones })
     Vue.nextTick(() => {
       const dialogItemsListElement =
-        vm.$el.querySelector('.add-timezone-dialog-content').children[0]
+        vm.$el.querySelector('.add-timezone-dialog-content').firstChild
       expect(dialogItemsListElement.children.length)
         .to.equal(timezones.length)
       for (let i = 0; i < MOCK_TIMEZONES_COUNT; ++i) {
         const child = dialogItemsListElement.children[i]
         const timezone = timezones[i]
-        expect(child.children[0].children[0].textContent).to.equal(timezone.value)
-        expect(child.children[0].children[1].textContent).to.equal(timezone.text)
+        expect(child.firstChild.firstChild.textContent).to.equal(timezone.value)
+        expect(child.firstChild.children[1].textContent).to.equal(timezone.text)
       }
       done()
     })
@@ -49,12 +49,12 @@ describe('AddTimezoneDialog.vue', () => {
     vm.searchQuery = 'timezone_1'
     Vue.nextTick(() => {
       const dialogItemsListElement =
-        vm.$el.querySelector('.add-timezone-dialog-content').children[0]
+        vm.$el.querySelector('.add-timezone-dialog-content').firstChild
       expect(dialogItemsListElement.children.length).to.equal(1)
-      const itemElement = dialogItemsListElement.children[0]
+      const itemElement = dialogItemsListElement.firstChild
       const timezone = timezones[1]
-      expect(itemElement.children[0].children[0].textContent).to.equal(timezone.value)
-      expect(itemElement.children[0].children[1].textContent).to.equal(timezone.text)
+      expect(itemElement.firstChild.firstChild.textContent).to.equal(timezone.value)
+      expect(itemElement.firstChild.children[1].textContent).to.equal(timezone.text)
       done()
     })
   })
