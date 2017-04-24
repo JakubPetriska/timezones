@@ -1,21 +1,16 @@
 <template>
-  <md-dialog v-on:close="clearSearchQueryDelayed()">
+  <md-dialog v-on:close="clearSearchQueryDelayed()" v-on:open="setFocusToSearchBar">
     <md-dialog-title>
       <span>Add timezone</span>
       <md-input-container style="padding-bottom:0">
-        <md-input v-model="searchQuery"
-                  autofocus
-                  @keyup.native.enter="selectFirst() && close()"
-                  placeholder="Search for timezone name, city, state or offset"></md-input>
+        <md-input id="search-bar" v-model="searchQuery" @keyup.native.enter="selectFirst() && close()" placeholder="Search for timezone name, city, state or offset">
+        </md-input>
       </md-input-container>
     </md-dialog-title>
   
     <md-dialog-content class="add-timezone-dialog-content">
       <md-list>
-        <md-list-item v-for="timezone in searchedTimezones"
-                      :key="timezone.value"
-                      class="timezones-list-item"
-                      @click.native="addTimezone(timezone); close()">
+        <md-list-item v-for="timezone in searchedTimezones" :key="timezone.value" class="timezones-list-item" @click.native="addTimezone(timezone); close()">
           <div class="md-list-text-container">
             <span>{{timezone.value}}</span>
             <span>{{timezone.text}}</span>
@@ -25,8 +20,7 @@
     </md-dialog-content>
   
     <md-dialog-actions>
-      <md-button class="md-primary"
-                 @click.native="close()">Cancel</md-button>
+      <md-button class="md-primary" @click.native="close()">Cancel</md-button>
     </md-dialog-actions>
   </md-dialog>
 </template>
@@ -69,6 +63,11 @@ export default {
     close() {
       // First and only child of this component is the dialog element
       this.$children[0].close()
+    },
+    setFocusToSearchBar() {
+      window.setTimeout(function () {
+        document.getElementById('search-bar').focus()
+      }, 0)
     },
     addTimezone(timezone) {
       this.$emit('add-timezone', timezone)
