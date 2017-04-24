@@ -29,4 +29,19 @@ npm run e2e
 npm test
 ```
 
+## Testing
+``` bash
+# run unit tests
+npm run unit
+
+# run unit tests with more concise output, without some vue-material warnings
+npm run unit-concise
+
+# run e2e tests
+npm run e2e
+
+# run all tests
+npm test
+```
+
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
