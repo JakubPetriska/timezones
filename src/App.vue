@@ -45,13 +45,13 @@
 import TimezoneCard from './components/TimezoneCard'
 import ClearAllConfirmationDialog from './components/ClearAllConfirmationDialog'
 import AddTimezoneDialog from './components/AddTimezoneDialog'
-import timezonesjson from 'timezones.json'
 
 export default {
   name: 'app',
   components: {
     TimezoneCard, ClearAllConfirmationDialog, AddTimezoneDialog
   },
+  props: ['timezones'],
   data: function () {
     return {
       availableTimezones: new Map(),
@@ -59,11 +59,12 @@ export default {
     }
   },
   created: function () {
-    // Add timezones from timezones.json into our available timezones Map
-    for (let i = 0; i < timezonesjson.length; ++i) {
-      const timezone = timezonesjson[i]
+    // Add timezones from allTimezones into our available timezones Map
+    for (let i = 0; i < this.timezones.length; ++i) {
+      const timezone = this.timezones[i]
       if (timezone.utc && timezone.utc.length > 0) {
-        // Omit timezones withou utc field, the utc field is used to identify the timezone
+        // Omit timezones withou utc field, the utc field is used to identify
+        // the timezone in momenttz.js to get the proper current time.
         // Timezones withou utc field are old and unused (nothing returned by googling of such timezones)
         // At the time of writing (10.4.2017) there were 2 such timezones
         this.availableTimezones.set(timezone.value, timezone)
