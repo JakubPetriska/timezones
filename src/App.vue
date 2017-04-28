@@ -90,7 +90,7 @@ export default {
         .sort((left, right) => left.offset - right.offset)
     },
     notAddedTimezones() {
-      return this.availableTimezonesList.filter(e => this.shownTimezones.indexOf(e.value) === -1)
+      return this.availableTimezonesList.filter(e => !this.shownTimezones.includes(e.value))
     }
   },
   methods: {
