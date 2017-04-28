@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import App from './App'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 import timezonesjson from 'timezones.json'
+import App from './App'
 
 Vue.config.productionTip = false
 Vue.use(VueMaterial)

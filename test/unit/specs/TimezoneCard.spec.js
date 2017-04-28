@@ -1,6 +1,6 @@
-import TimezoneCard from '@/components/TimezoneCard'
-import TestUtils from '../TestUtils.js'
 import momenttz from 'moment-timezone'
+import TestUtils from '../TestUtils.js'
+import TimezoneCard from '@/components/TimezoneCard'
 
 // Test that timezone name is properly rendered
 describe('TimezoneCard.vue', () => {

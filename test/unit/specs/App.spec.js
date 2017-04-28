@@ -1,7 +1,7 @@
-import App from '@/App'
-import TestUtils from '../TestUtils.js'
 import Vue from 'vue'
 import timezonesjson from 'timezones.json'
+import TestUtils from '../TestUtils.js'
+import App from '@/App'
 
 const ALL_MOCK_TIMEZONES_COUNT = 10
 const VALID_MOCK_TIMEZONES_COUNT = 8

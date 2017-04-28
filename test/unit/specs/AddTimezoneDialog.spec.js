@@ -1,6 +1,6 @@
-import AddTimezoneDialog from '@/components/AddTimezoneDialog'
-import TestUtils from '../TestUtils.js'
 import Vue from 'vue'
+import TestUtils from '../TestUtils.js'
+import AddTimezoneDialog from '@/components/AddTimezoneDialog'
 
 const MOCK_TIMEZONES_COUNT = 5
 
