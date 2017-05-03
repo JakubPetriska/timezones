@@ -59,7 +59,7 @@ export default {
     }
   },
   created: function () {
-    // Add timezones from allTimezones into our available timezones Map
+    // Add timezones from timezones property into our availableTimezones Map
     for (let i = 0; i < this.timezones.length; ++i) {
       const timezone = this.timezones[i]
       if (timezone.utc && timezone.utc.length > 0) {
